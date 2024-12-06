@@ -10,22 +10,26 @@ function App() {
   const [language, setLanguage] = useState();
   const [defaultCategory, setDefaultCategory] = useState("any");
   // const [flag, setFlags] = useState();
-  const [jokeType, setJokeType] = useState(["single", "twopart"]);
+  const [jokeType, setJokeType] = useState();
   const [randomJoke, setRandomJoke] = useState();
   // const [count, setCount] = useState(0);
 
   function fetchJoke() {
     // Fetching Joke API
     axios
-      .get(`https://v2.jokeapi.dev/joke/${setDefaultCategory}?${setJokeType}`, {
-        params: {
-          test: "test",
-        },
-      })
-
+      .get(
+        `https://v2.jokeapi.dev/joke/${defaultCategory}?${jokeType}&${language}`,
+        {
+          params: {
+            any: defaultCategory,
+            lang: language,
+            type: jokeType,
+          },
+        }
+      )
       .then((response) => {
         // getting the response
-        console.log(response.data.type);
+        console.log(response.data);
 
         setRandomJoke(response.data.joke);
       });
@@ -37,7 +41,7 @@ function App() {
 
   return (
     <>
-      {/* <div className="h-screen overflow-hidden bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+      <div className="h-screen overflow-hidden bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
         <h1 className="flex flex-col items-center mt-10">
           Random Joke Generator
         </h1>
@@ -49,7 +53,7 @@ function App() {
             Press me
           </button>
         </div>
-      </div> */}
+      </div>
     </>
   );
 }
