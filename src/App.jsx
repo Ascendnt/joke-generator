@@ -29,9 +29,18 @@ function App() {
       )
       .then((response) => {
         // getting the response
-        console.log(response.data);
+        //two part joke
+        console.log(response.data.setup);
+        console.log(response.data.delivery);
+        // single joke
+        console.log(response.data.joke);
 
-        setRandomJoke(response.data.joke);
+        const singleType = response.data.joke;
+        const twoType = response.data.setup.concat(" ", response.data.delivery);
+
+        const jokeCheck = singleType ? singleType : twoType;
+
+        setRandomJoke(jokeCheck);
       });
   }
 
@@ -46,6 +55,15 @@ function App() {
           Random Joke Generator
         </h1>
         <div className="flex flex-col items-center justify-center h-full">
+          <label>
+            <input type="checkbox" onClick={() => setJokeType("single")} />
+            Single
+          </label>
+          <label>
+            <input type="checkbox" onClick={() => setJokeType("twopart")} />
+            Two Part
+          </label>
+
           <p className="w-full px-4 text-3xl text-center">{randomJoke}</p>
           <button
             onClick={fetchJoke}
