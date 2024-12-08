@@ -23,7 +23,14 @@ function App() {
           params: {
             any: defaultCategory,
             lang: language,
-            type: jokeType,
+            type:
+              jokeType === "single"
+                ? "single"
+                : jokeType === "twotype"
+                ? "twotype"
+                : jokeType === "single" && "twotype"
+                ? "any"
+                : "any",
           },
         }
       )
@@ -36,7 +43,9 @@ function App() {
         console.log(response.data.joke);
 
         const singleType = response.data.joke;
-        const twoType = response.data.setup.concat(" ", response.data.delivery);
+        const twoType = response.data.setup
+          ? `${response.data.setup} ${response.data.delivery}`
+          : undefined;
 
         const jokeCheck = singleType ? singleType : twoType;
 
@@ -64,7 +73,9 @@ function App() {
             Two Part
           </label>
 
-          <p className="w-full px-4 text-3xl text-center">{randomJoke}</p>
+          <p className="container px-4 mx-auto text-3xl text-center">
+            {randomJoke}
+          </p>
           <button
             onClick={fetchJoke}
             className="px-4 py-2 mt-5 font-semibold text-blue-700 bg-transparent border border-blue-500 rounded hover:bg-blue-500 hover:text-white hover:border-transparent">
