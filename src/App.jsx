@@ -7,7 +7,14 @@ import axios from "axios";
 
 function App() {
   // setting a button
-  const [language, setLanguage] = useState();
+  const [language, setLanguage] = useState([
+    "cz",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "pt",
+  ]);
   const [defaultCategory, setDefaultCategory] = useState("any");
   // const [flag, setFlags] = useState();
   const [jokeType, setJokeType] = useState();
@@ -22,7 +29,7 @@ function App() {
         {
           params: {
             any: defaultCategory,
-            lang: language,
+            lang: language === "en" ? "" : language,
             type:
               jokeType === "single"
                 ? "single"
@@ -63,16 +70,25 @@ function App() {
         <h1 className="flex flex-col items-center mt-10">
           Random Joke Generator
         </h1>
-        <div className="flex flex-col items-center justify-center h-full">
-          <label>
-            <input type="checkbox" onClick={() => setJokeType("single")} />
-            Single
-          </label>
-          <label>
-            <input type="checkbox" onClick={() => setJokeType("twopart")} />
-            Two Part
-          </label>
+        <label htmlFor="">
+          <input type="checkbox" onClick={() => setLanguage.map()} />
+          choose language
+        </label>
+        <select name="selectedFruit">
+          <option value="apple">Apple</option>
+          <option value="banana">Banana</option>
+          <option value="orange">Orange</option>
+        </select>
 
+        <label>
+          <input type="checkbox" onClick={() => setJokeType("single")} />
+          Single
+        </label>
+        <label>
+          <input type="checkbox" onClick={() => setJokeType("twopart")} />
+          Two Part
+        </label>
+        <div className="flex flex-col items-center justify-center h-full">
           <p className="container px-4 mx-auto text-3xl text-center">
             {randomJoke}
           </p>
